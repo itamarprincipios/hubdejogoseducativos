@@ -151,6 +151,59 @@
 
     </section>
 
+    <!-- ══════════════════════════════════════
+         ESTRUTURA DO PROJETO
+    ══════════════════════════════════════ -->
+    <div class="hub-divider" role="separator" aria-hidden="true"></div>
+
+    <section class="project-structure" aria-label="Estrutura do projeto">
+      <button
+        id="btn-toggle-structure"
+        class="structure-toggle"
+        aria-expanded="false"
+        aria-controls="structure-tree"
+      >
+        <span class="toggle-icon" aria-hidden="true">📁</span>
+        <span>Estrutura do projeto</span>
+        <span class="toggle-chevron" aria-hidden="true">›</span>
+      </button>
+
+      <div id="structure-tree" class="structure-tree" hidden>
+        <div class="tree-header">
+          <span class="tree-dot red"></span>
+          <span class="tree-dot yellow"></span>
+          <span class="tree-dot green"></span>
+          <span class="tree-title">gameblocos/</span>
+        </div>
+        <pre class="tree-body" aria-label="Árvore de arquivos do projeto"><span class="t-dir">📂 gameblocos/</span>                     <span class="t-comment">← raiz do repositório</span>
+<span class="t-branch">├──</span> <span class="t-file">index.html</span>                     <span class="t-comment">← Hub principal (este arquivo)</span>
+<span class="t-branch">├──</span> <span class="t-file">hub.css</span>                        <span class="t-comment">← Estilos do hub</span>
+<span class="t-branch">│</span>
+<span class="t-branch">├──</span> <span class="t-dir">📂 jogo-leitura/</span>               <span class="t-comment">← Jogo de Leitura com Blocos</span>
+<span class="t-branch">│   ├──</span> <span class="t-file">index.html</span>
+<span class="t-branch">│   ├──</span> <span class="t-file">index.css</span>
+<span class="t-branch">│   ├──</span> <span class="t-file">main.js</span>
+<span class="t-branch">│   ├──</span> <span class="t-file">service-worker.js</span>
+<span class="t-branch">│   ├──</span> <span class="t-dir">📂 js/</span>                     <span class="t-comment">← Módulos do jogo</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">engine/</span>           <span class="t-dim">GameEngine, Block, Stack</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">audio/</span>            <span class="t-dim">AudioSystem, SoundFX</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">recognition/</span>      <span class="t-dim">SpeechRecognizer, VoskWorker</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">evaluation/</span>       <span class="t-dim">Evaluator</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">scoring/</span>          <span class="t-dim">ScoreSystem</span>
+<span class="t-branch">│   │   ├──</span> <span class="t-dir">ui/</span>               <span class="t-dim">UIManager</span>
+<span class="t-branch">│   │   └──</span> <span class="t-dir">data/</span>             <span class="t-dim">words.js</span>
+<span class="t-branch">│   └──</span> <span class="t-dir">📂 assets/sounds/</span>         <span class="t-comment">← Áudios do jogo</span>
+<span class="t-branch">│</span>
+<span class="t-branch">├──</span> <span class="t-soon">📂 jogo2/</span>                      <span class="t-comment">← Em breve</span>
+<span class="t-branch">├──</span> <span class="t-soon">📂 jogo3/</span>                      <span class="t-comment">← Em breve</span>
+<span class="t-branch">└──</span> <span class="t-soon">📂 jogo4/</span>                      <span class="t-comment">← Em breve</span></pre>
+
+        <div class="structure-tip">
+          💡 <strong>Para adicionar um novo jogo:</strong> crie uma pasta (ex: <code>jogo2/</code>) com seu próprio <code>index.html</code> e adicione um card no hub.
+        </div>
+      </div>
+    </section>
+
   </div><!-- /.hub-wrapper -->
 
   <!-- ══════════════════════════════════════
@@ -163,11 +216,12 @@
     </p>
   </footer>
 
-  <!-- Micro-interação: ripple ao clicar no card ativo -->
+  <!-- Micro-interação: ripple + toggle estrutura do projeto -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const activeCards = document.querySelectorAll('.game-card:not(.disabled)');
 
+      // ── Ripple nos cards ativos ──────────────────────────
+      const activeCards = document.querySelectorAll('.game-card:not(.disabled)');
       activeCards.forEach(card => {
         card.addEventListener('click', function (e) {
           const ripple = document.createElement('span');
@@ -175,7 +229,6 @@
           const size   = Math.max(rect.width, rect.height);
           const x      = e.clientX - rect.left - size / 2;
           const y      = e.clientY - rect.top  - size / 2;
-
           Object.assign(ripple.style, {
             position:     'absolute',
             width:        size + 'px',
@@ -189,18 +242,147 @@
             pointerEvents:'none',
             zIndex:       '0',
           });
-
           card.appendChild(ripple);
           setTimeout(() => ripple.remove(), 600);
         });
       });
+
+      // ── Toggle: Estrutura do Projeto ─────────────────────
+      const btn  = document.getElementById('btn-toggle-structure');
+      const tree = document.getElementById('structure-tree');
+
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        if (isOpen) {
+          tree.hidden = true;
+        } else {
+          tree.hidden = false;
+        }
+      });
     });
   </script>
 
-  <!-- Animação ripple (inline, sem dependências) -->
+  <!-- Estilos inline: ripple + estrutura do projeto -->
   <style>
     @keyframes rippleAnim {
       to { transform: scale(2.5); opacity: 0; }
+    }
+
+    /* ── Seção: Estrutura do Projeto ── */
+    .project-structure {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .structure-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: #c4b5fd;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .structure-toggle:hover {
+      background: rgba(124, 58, 237, 0.16);
+      border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    .toggle-chevron {
+      margin-left: auto;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .structure-toggle[aria-expanded="true"] .toggle-chevron {
+      transform: rotate(90deg);
+    }
+
+    .structure-tree {
+      margin-top: 12px;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      animation: treeOpen 0.3s ease;
+    }
+
+    @keyframes treeOpen {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tree-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(20, 8, 50, 0.9);
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .tree-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .tree-dot.red    { background: #ff5f57; }
+    .tree-dot.yellow { background: #ffbd2e; }
+    .tree-dot.green  { background: #28c840; }
+
+    .tree-title {
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8b6fc0;
+      font-family: 'Nunito', monospace;
+    }
+
+    .tree-body {
+      background: rgba(10, 4, 32, 0.95);
+      padding: 20px 24px;
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      line-height: 1.9;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .t-dir    { color: #a78bfa; font-weight: 700; }
+    .t-file   { color: #e2e8f0; }
+    .t-branch { color: #4a3570; }
+    .t-comment{ color: #4ade80; opacity: 0.7; font-style: italic; }
+    .t-dim    { color: #6b4fa0; font-size: 11px; }
+    .t-soon   { color: #6b4fa0; }
+
+    .structure-tip {
+      background: rgba(124, 58, 237, 0.08);
+      border-top: 1px solid rgba(124, 58, 237, 0.15);
+      padding: 14px 20px;
+      font-size: 13px;
+      color: #a78bca;
+      line-height: 1.6;
+    }
+
+    .structure-tip code {
+      background: rgba(124, 58, 237, 0.2);
+      color: #c084fc;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
     }
   </style>
 
