@@ -475,11 +475,26 @@ function endGame() {
   if (confColor) launchConfetti(confColor);
 }
 
-// ── Keypad setup ──────────────────────────────
+// ── Keypad setup — Multi-touch real ──────────
+// touchstart + preventDefault impede o evento click subsequente,
+// permitindo que DOIS dedos em DOIS painéis disparem ao mesmo tempo.
 function setupKeypad(kpId, team) {
   document.getElementById(kpId).querySelectorAll('.key').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
+
+    // Toque (tablet/celular) — processa imediatamente e bloqueia click duplicado
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();          // ← impede o click fantasma pós-touch
+      e.stopPropagation();
+      handleKey(team, btn.dataset.k);
+      btn.classList.add('key-touching');
+    }, { passive: false });
+
+    btn.addEventListener('touchend', () => {
+      btn.classList.remove('key-touching');
+    }, { passive: true });
+
+    // Mouse / fallback para não-touch
+    btn.addEventListener('click', () => {
       handleKey(team, btn.dataset.k);
     });
   });
