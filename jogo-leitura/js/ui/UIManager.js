@@ -95,6 +95,12 @@ export class UIManager {
         this._animateMascot("sad");
     }
 
+    /** Feedback imediato para quando o usuário fala algo que não bate com nenhum bloco */
+    showWrongGuess(text) {
+        this._showFeedback(`❌ "${text}"?`, "feedback-miss");
+        this._animateMascot("sad");
+    }
+
     /** Notificação de aumento de velocidade (tier de dificuldade) */
     showSpeedUp(message) {
         this._showFeedback(message, "feedback-speedup");

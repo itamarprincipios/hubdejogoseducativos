@@ -69,14 +69,28 @@ export function similarity(a, b) {
  * @param {number} threshold  - padrão 0.80 (80%)
  * @returns {{ match: boolean, score: number, normalizedRecognized: string, normalizedExpected: string }}
  */
-export function evaluate(recognized, expected, threshold = 0.80) {
+export function evaluate(recognized, expected) {
     const normRec = normalize(recognized);
     const normExp = normalize(expected);
+
+    // Threshold dinâmico: palavras curtas são mais difíceis de captar perfeitamente.
+    // 1-3 letras: 65% de similaridade
+    // 4-5 letras: 75%
+    // 6+ letras: 82%
+    let threshold = 0.82;
+    if (normExp.length <= 3) threshold = 0.65;
+    else if (normExp.length <= 5) threshold = 0.75;
 
     // Tenta match exato ou em qualquer token da frase reconhecida
     const tokens = normRec.split(" ");
     let bestScore = similarity(normRec, normExp);
+    
     for (const token of tokens) {
+        // Se for um match exato em um dos tokens, retorna 1.0 imediatamente
+        if (token === normExp) {
+            bestScore = 1.0;
+            break;
+        }
         const s = similarity(token, normExp);
         if (s > bestScore) bestScore = s;
     }

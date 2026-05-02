@@ -27,7 +27,7 @@ export class GameEngine {
         this.ui = new UIManager();
         this.audio = new AudioSystem();
         this.recognizer = new SpeechRecognizer({
-            onResult: (text) => this._onSpeechResult(text),
+            onResult: (text, isFinal) => this._onSpeechResult(text, isFinal),
             onPartial: (text) => this.ui.setPartialText(text),
             onProgress: (pct, msg) => this.ui.updateLoadingProgress(pct, msg),
             onReady: () => this._onRecognizerReady(),
@@ -211,29 +211,45 @@ export class GameEngine {
     // RECONHECIMENTO DE VOZ
     // ─────────────────────────────────────────
 
-    _onSpeechResult(text) {
+    _onSpeechResult(text, isFinal) {
         if (this.state !== "PLAYING") return;
         
         // Se acabamos de acertar uma palavra, ignoramos a entrada por um breve momento
         // para evitar que o microfone capture o som do próprio 'beep' de acerto.
         if (Date.now() < this._ignoreSpeechUntil) return;
 
-        if (!text || text === this._lastRecognized) return;
+        if (!text) return;
+        
+        // Se é um resultado parcial e já processamos esse mesmo texto, ignora.
+        // Se for isFinal, processamos mesmo que seja igual ao anterior para dar feedback de erro se necessário.
+        if (text === this._lastRecognized && !isFinal) return;
         this._lastRecognized = text;
-        this.ui.setPartialText("");
 
         // Tenta casar com algum bloco ativo no ar (não pousado)
         const airBlocks = this.blocks.filter(b => b.active && !b.landed && !b._destroying);
         // Testa do bloco mais baixo (mais próximo do chão) para o mais alto
         airBlocks.sort((a, b) => b.y - a.y);
 
+        let matched = false;
         for (const block of airBlocks) {
-            const { match, score: simScore } = evaluate(text, block.word);
+            const { match } = evaluate(text, block.word);
             if (match) {
                 this._destroyBlock(block);
-                return;
+                matched = true;
+                break;
             }
         }
+
+        // Feedback de ERRO: apenas se o reconhecedor finalizou a frase (silêncio) e não houve match.
+        // Isso evita barulhos aleatórios darem feedback de erro o tempo todo.
+        if (isFinal && !matched && text.length > 2) {
+            this._playSound("wrong");
+            this.ui.showWrongGuess(text);
+            airBlocks.forEach(b => b.triggerShake());
+        }
+        
+        // Limpa o texto parcial da UI se for o resultado final
+        if (isFinal) this.ui.setPartialText("");
     }
 
     // ─────────────────────────────────────────

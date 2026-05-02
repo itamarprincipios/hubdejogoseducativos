@@ -62,6 +62,7 @@ export class Block {
 
         this._wobble = (Math.random() - 0.5) * 0.15;
         this._wobblePhase = Math.random() * Math.PI * 2;
+        this._shakeTimer = 0; // timer para efeito de erro
     }
 
     update(dt) {
@@ -71,6 +72,7 @@ export class Block {
             return this._destroyTimer >= this._DESTROY_DURATION;
         }
         if (!this.landed) this.y += this.speed * dt;
+        if (this._shakeTimer > 0) this._shakeTimer -= dt;
         this._wobblePhase += dt * 2.5;
         return false;
     }
@@ -80,15 +82,22 @@ export class Block {
         this._destroyTimer = 0;
     }
 
+    /** Faz o bloco tremer (feedback de erro) */
+    triggerShake() {
+        if (this.landed || this._destroying) return;
+        this._shakeTimer = 0.4;
+    }
+
     draw(ctx) {
         if (!this.active && !this._destroying) return;
         ctx.save();
         ctx.globalAlpha = this.alpha;
 
         const wobbleX = this.landed ? 0 : Math.sin(this._wobblePhase) * 3 * this._wobble;
+        const shakeX = this._shakeTimer > 0 ? (Math.sin(this._shakeTimer * 60) * 8) : 0;
         const w = this.blockWidth;
         const h = BLOCK_HEIGHT;
-        const x = this.x - w / 2 + wobbleX;
+        const x = this.x - w / 2 + wobbleX + shakeX;
         const y = this.y;
         const r = 18;
 

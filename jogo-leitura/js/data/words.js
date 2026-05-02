@@ -77,7 +77,7 @@ export const WORD_POOLS = {
     { text: "cadeira", type: "single" }, { text: "dominó", type: "single" }, { text: "escola", type: "single" },
     { text: "fumaça", type: "single" }, { text: "galinha", type: "single" }, { text: "hotel", type: "single" },
     { text: "igreja", type: "single" }, { text: "janela", type: "single" }, { text: "laranja", type: "single" },
-    { text: "mochila", type: "single" }, { text: "novelha", type: "single" }, { text: "olheiro", type: "single" },
+    { text: "mochila", type: "single" }, { text: "novela", type: "single" }, { text: "olheiro", type: "single" },
     { text: "palhaço", type: "single" }, { text: "queimada", type: "single" }, { text: "raposa", type: "single" },
     { text: "sapato", type: "single" }, { text: "teclado", type: "single" }, { text: "urubu", type: "single" },
     { text: "violeta", type: "single" }, { text: "xadrez", type: "single" }, { text: "zangado", type: "single" },

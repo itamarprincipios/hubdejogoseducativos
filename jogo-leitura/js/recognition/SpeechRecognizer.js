@@ -53,7 +53,7 @@ export class SpeechRecognizer {
                 if (!isDuplicate) {
                     lastFiredText = text;
                     lastFiredAt = now;
-                    this._onResult(text);
+                    this._onResult(text, isFinal);
                 }
             }
         };
