@@ -237,8 +237,7 @@ html, body {
 ══════════════════════════════════════════ */
 #screen-game {
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
   overflow: hidden;
   padding: 10px;
   gap: 8px;
@@ -257,7 +256,6 @@ html, body {
   overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  max-height: calc(100vh - 20px);
 }
 
 .panel-a { background: var(--blue-bg); border-right: 2px solid var(--blue-lt); }
@@ -426,7 +424,6 @@ html, body {
   overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-  max-height: calc(100vh - 20px);
 }
 
 .arena-hdr {
