@@ -3,28 +3,29 @@
 // Cacheia os assets do jogo (incluindo o modelo Vosk) para uso offline.
 // ============================================================
 
-const CACHE_NAME = "jogo-blocos-v1";
+const CACHE_NAME = "jogo-blocos-v2";
 const VOSK_CACHE = "vosk-model-v1";
 
 // Assets estáticos que sempre cacheamos no install
+// Caminhos relativos à subpasta /jogo-leitura/
 const STATIC_ASSETS = [
-    "/",
-    "/index.html",
-    "/index.css",
-    "/main.js",
-    "/js/engine/GameEngine.js",
-    "/js/engine/Block.js",
-    "/js/engine/Stack.js",
-    "/js/audio/AudioSystem.js",
-    "/js/recognition/SpeechRecognizer.js",
-    "/js/recognition/VoskWorker.js",
-    "/js/evaluation/Evaluator.js",
-    "/js/scoring/ScoreSystem.js",
-    "/js/ui/UIManager.js",
-    "/js/data/words.js",
-    "/assets/sounds/correct.mp3",
-    "/assets/sounds/wrong.mp3",
-    "/assets/sounds/land.mp3",
+    "./",
+    "./index.html",
+    "./index.css",
+    "./main.js",
+    "./js/engine/GameEngine.js",
+    "./js/engine/Block.js",
+    "./js/engine/Stack.js",
+    "./js/audio/AudioSystem.js",
+    "./js/recognition/SpeechRecognizer.js",
+    "./js/recognition/VoskWorker.js",
+    "./js/evaluation/Evaluator.js",
+    "./js/scoring/ScoreSystem.js",
+    "./js/ui/UIManager.js",
+    "./js/data/words.js",
+    "./assets/sounds/correct.mp3",
+    "./assets/sounds/wrong.mp3",
+    "./assets/sounds/land.mp3",
 ];
 
 self.addEventListener("install", (event) => {
