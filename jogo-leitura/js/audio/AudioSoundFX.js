@@ -27,7 +27,7 @@ export function playCorrect() {
         osc.type = "sine";
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
         gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.08);
-        gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + i * 0.08 + 0.02);
+        gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + i * 0.08 + 0.02);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.25);
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -46,7 +46,7 @@ export function playWrong() {
     osc.type = "sawtooth";
     osc.frequency.setValueAtTime(300, ctx.currentTime);
     osc.frequency.linearRampToValueAtTime(150, ctx.currentTime + 0.3);
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -72,7 +72,7 @@ export function playLand() {
     source.buffer = buffer;
     filter.type = "lowpass";
     filter.frequency.setValueAtTime(300, ctx.currentTime);
-    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
     source.connect(filter);
     filter.connect(gain);

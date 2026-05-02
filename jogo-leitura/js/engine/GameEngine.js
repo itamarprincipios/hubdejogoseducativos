@@ -54,6 +54,7 @@ export class GameEngine {
         this._nextSpeedUpAt = 10;
 
         this.particles = [];
+        this._ignoreSpeechUntil = 0; // Período para ignorar voz (evita eco do beep)
         this._bindEvents();
     }
 
@@ -212,6 +213,11 @@ export class GameEngine {
 
     _onSpeechResult(text) {
         if (this.state !== "PLAYING") return;
+        
+        // Se acabamos de acertar uma palavra, ignoramos a entrada por um breve momento
+        // para evitar que o microfone capture o som do próprio 'beep' de acerto.
+        if (Date.now() < this._ignoreSpeechUntil) return;
+
         if (!text || text === this._lastRecognized) return;
         this._lastRecognized = text;
         this.ui.setPartialText("");
@@ -257,6 +263,9 @@ export class GameEngine {
 
         // Som de acerto
         this._playSound("correct");
+
+        // Define janela de ignorar voz (600ms é o tempo do arpejo de acerto)
+        this._ignoreSpeechUntil = Date.now() + 600;
     }
 
     /**
@@ -363,6 +372,7 @@ export class GameEngine {
                     this.ui.showMiss(block.word);
                     this.ui.updateScore(this.score.score, this.score.combo, this.score.highscore);
                     this._playSound("land");
+                    this._ignoreSpeechUntil = Date.now() + 300;
                 }
             }
             return !shouldRemove;
