@@ -311,8 +311,8 @@ export class GameEngine {
         // Som de acerto
         this._playSound("correct");
 
-        // Define janela de ignorar voz (300ms é o suficiente para o beep de acerto)
-        this._ignoreSpeechUntil = Date.now() + 300;
+        // Define janela de ignorar voz (150ms é o suficiente para o beep de acerto)
+        this._ignoreSpeechUntil = Date.now() + 150;
     }
 
     /**
@@ -419,7 +419,7 @@ export class GameEngine {
                     this.ui.showMiss(block.word);
                     this.ui.updateScore(this.score.score, this.score.combo, this.score.highscore);
                     this._playSound("land");
-                    this._ignoreSpeechUntil = Date.now() + 150;
+                    this._ignoreSpeechUntil = Date.now() + 100;
                 }
             }
             return !shouldRemove;
