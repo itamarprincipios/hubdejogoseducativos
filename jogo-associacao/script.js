@@ -170,6 +170,47 @@ function getLevelData(level) {
     return [...all].sort(() => Math.random() - 0.5).slice(0, count);
 }
 
+// ── Áudio (Web Audio API) ─────────────────────────
+let _audioCtx = null;
+function getAudioCtx() {
+    if (!_audioCtx || _audioCtx.state === 'closed') {
+        _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+    return _audioCtx;
+}
+
+function playCorrect() {
+    const ctx = getAudioCtx();
+    const freqs = [523.25, 659.25, 783.99]; // C5, E5, G5
+    freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.1);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.1 + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.1);
+        osc.stop(ctx.currentTime + i * 0.1 + 0.3);
+    });
+}
+
+function playWrong() {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+}
+
 // ── Handlers ─────────────────────────────────────
 function handleDragStart(e) {
     draggedElement = this;
@@ -184,19 +225,21 @@ function handleDrop(e) {
     e.preventDefault();
     this.classList.remove('hover');
     
+    if (!draggedElement) return;
+
     const itemName = draggedElement.dataset.name;
     const slotMatch = this.dataset.match;
 
     if (itemName === slotMatch) {
         processMatch(draggedElement, this);
     } else {
-        playSound('../jogo-leitura/assets/sounds/wrong.mp3');
+        playWrong();
         this.classList.add('error');
         setTimeout(() => this.classList.remove('error'), 500);
     }
 }
 
-// ── Touch Handlers ───────────────────────────────
+// ── Touch Handlers (Otimizados) ──────────────────
 let touchOffset = { x: 0, y: 0 };
 
 function handleTouchStart(e) {
@@ -209,8 +252,10 @@ function handleTouchStart(e) {
 }
 
 function handleTouchMove(e) {
+    if (!draggedElement) return;
     e.preventDefault();
     const touch = e.touches[0];
+    
     draggedElement.style.position = 'fixed';
     draggedElement.style.zIndex = '1000';
     draggedElement.style.left = (touch.clientX - touchOffset.x) + 'px';
@@ -227,6 +272,7 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
+    if (!draggedElement) return;
     this.classList.remove('dragging');
     this.style.pointerEvents = 'auto';
 
@@ -234,7 +280,6 @@ function handleTouchEnd(e) {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    // Encontra o slot por sobreposição de coordenadas (mais confiável em tablets)
     let foundSlot = null;
     document.querySelectorAll('.assoc-slot').forEach(slot => {
         if (slot.classList.contains('matched')) return;
@@ -249,18 +294,18 @@ function handleTouchEnd(e) {
         if (this.dataset.name === foundSlot.dataset.match) {
             processMatch(this, foundSlot);
         } else {
-            playSound('../jogo-leitura/assets/sounds/wrong.mp3');
+            playWrong();
             foundSlot.classList.add('error');
             setTimeout(() => foundSlot.classList.remove('error'), 500);
         }
     }
 
-    // Reset de estilos
     this.style.position = '';
     this.style.left = '';
     this.style.top = '';
     this.style.zIndex = '';
     document.querySelectorAll('.assoc-slot').forEach(s => s.classList.remove('hover'));
+    draggedElement = null;
 }
 
 function processMatch(item, slot) {
@@ -268,7 +313,7 @@ function processMatch(item, slot) {
     slot.classList.add('matched');
     slot.innerHTML = `<div class="slot-img-container">${item.innerHTML}</div><span class="slot-label">${slot.dataset.match}</span>`;
     
-    playSound('../jogo-leitura/assets/sounds/correct.mp3');
+    playCorrect();
 
     matchedCount++;
     updateHUD();
@@ -292,9 +337,7 @@ function updateHUD() {
 }
 
 function playSound(src) {
-    const audio = new Audio(src);
-    audio.volume = 0.5;
-    audio.play().catch(() => {});
+    // Mantido por compatibilidade, mas agora usamos playCorrect/playWrong diretamente
 }
 
 init();

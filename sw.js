@@ -3,7 +3,7 @@
 // Cacheia todos os jogos do Hub para uso offline.
 // ============================================================
 
-const CACHE_NAME = "hub-jogos-v17";
+const CACHE_NAME = "hub-jogos-v18";
 const VOSK_CACHE = "vosk-model-v1";
 const IMAGE_CACHE = "hub-images-v1";
 
@@ -30,8 +30,6 @@ const STATIC_ASSETS = [
     "./jogo-balao/index.html",
     
     // Assets Comuns
-    "./jogo-leitura/assets/sounds/correct.mp3",
-    "./jogo-leitura/assets/sounds/wrong.mp3"
 ];
 
 self.addEventListener("install", (event) => {
