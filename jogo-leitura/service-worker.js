@@ -3,7 +3,7 @@
 // Cacheia os assets do jogo (incluindo o modelo Vosk) para uso offline.
 // ============================================================
 
-const CACHE_NAME = "jogo-blocos-v3";
+const CACHE_NAME = "jogo-blocos-v4";
 const VOSK_CACHE = "vosk-model-v1";
 
 // Assets estáticos que sempre cacheamos no install
