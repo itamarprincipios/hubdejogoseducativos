@@ -3,7 +3,7 @@
 // Cacheia todos os jogos do Hub para uso offline.
 // ============================================================
 
-const CACHE_NAME = "hub-jogos-v7";
+const CACHE_NAME = "hub-jogos-v8";
 const VOSK_CACHE = "vosk-model-v1";
 
 const STATIC_ASSETS = [

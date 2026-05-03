@@ -243,6 +243,18 @@ body {
     border-color: transparent;
 }
 
+.assoc-slot.error {
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.2);
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
 .slot-image {
     font-size: 32px;
 }

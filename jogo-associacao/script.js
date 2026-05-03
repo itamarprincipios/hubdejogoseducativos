@@ -139,7 +139,7 @@ function handleDrop(e) {
     if (itemName === slotMatch) {
         processMatch(draggedElement, this);
     } else {
-        // Feedback de erro visual opcional
+        playSound('../jogo-leitura/assets/sounds/wrong.mp3');
         this.classList.add('error');
         setTimeout(() => this.classList.remove('error'), 500);
     }
@@ -164,6 +164,10 @@ function handleTouchMove(e) {
     draggedElement.style.zIndex = '1000';
     draggedElement.style.left = (touch.clientX - touchOffset.x) + 'px';
     draggedElement.style.top = (touch.clientY - touchOffset.y) + 'px';
+    
+    // IMPORTANTE: Desabilita eventos de ponteiro no elemento arrastado 
+    // para que o elementFromPoint consiga "ver" o slot atrás dele.
+    draggedElement.style.pointerEvents = 'none';
 
     // Highlight slot sob o toque
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -177,6 +181,8 @@ function handleTouchMove(e) {
 
 function handleTouchEnd(e) {
     this.classList.remove('dragging');
+    this.style.pointerEvents = 'auto'; // Restaura eventos de ponteiro
+
     const touch = e.changedTouches[0];
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
     const slot = target?.closest('.assoc-slot');
@@ -203,12 +209,21 @@ function processMatch(item, slot) {
     slot.classList.add('matched');
     slot.innerHTML = `<span class="slot-image">${item.textContent}</span><span class="slot-label">${slot.dataset.match}</span>`;
     
+    // Som de acerto
+    playSound('../jogo-leitura/assets/sounds/correct.mp3');
+
     matchedCount++;
     updateProgress();
 
     if (matchedCount === totalItems) {
         setTimeout(() => showScreen('result'), 600);
     }
+}
+
+function playSound(src) {
+    const audio = new Audio(src);
+    audio.volume = 0.5;
+    audio.play().catch(() => {});
 }
 
 function updateProgress() {
