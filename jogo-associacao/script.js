@@ -23,16 +23,16 @@ const POOL = {
         { name: "UVA", img: "../assets/images/frutas/uva.png" },
         { name: "MORANGO", img: "../assets/images/frutas/morango.png" },
         { name: "MELANCIA", img: "../assets/images/frutas/melancia.png" },
-        { name: "LARANJA", img: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=200&h=200&fit=crop" },
-        { name: "ABACAXI", img: "https://images.unsplash.com/photo-1550258114-b0d2475b5394?w=200&h=200&fit=crop" },
-        { name: "LIMÃO", img: "https://images.unsplash.com/photo-1590502593747-42a996133562?w=200&h=200&fit=crop" },
-        { name: "CEREJA", img: "https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=200&h=200&fit=crop" },
-        { name: "MANGA", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=200&h=200&fit=crop" },
-        { name: "KIWI", img: "https://images.unsplash.com/photo-1591735156682-6b638971b052?w=200&h=200&fit=crop" },
-        { name: "PERA", img: "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=200&h=200&fit=crop" },
-        { name: "MELÃO", img: "https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=200&h=200&fit=crop" },
-        { name: "MAMÃO", img: "https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=200&h=200&fit=crop" },
-        { name: "PESSEGO", img: "https://images.unsplash.com/photo-1629911723982-433f8994793d?w=200&h=200&fit=crop" }
+        { name: "LARANJA", img: "../assets/images/frutas/laranja.png" },
+        { name: "ABACAXI", img: "../assets/images/frutas/abacaxi.png" },
+        { name: "LIMÃO", img: "../assets/images/frutas/limao.png" },
+        { name: "CEREJA", img: "../assets/images/frutas/cereja.png" },
+        { name: "MANGA", img: "../assets/images/frutas/manga.png" },
+        { name: "KIWI", img: "../assets/images/frutas/kiwi.png" },
+        { name: "PERA", img: "../assets/images/frutas/pera.png" },
+        { name: "MELÃO", img: "../assets/images/frutas/melao.png" },
+        { name: "MAMÃO", img: "../assets/images/frutas/mamao.png" },
+        { name: "PESSEGO", img: "../assets/images/frutas/pessego.png" }
     ],
     objetos: [
         { name: "MOCHILA", img: "../assets/images/objetos/mochila.png" },
@@ -40,16 +40,16 @@ const POOL = {
         { name: "LIVRO", img: "../assets/images/objetos/livro.png" },
         { name: "CADEIRA", img: "../assets/images/objetos/cadeira.png" },
         { name: "BOLA", img: "../assets/images/objetos/bola.png" },
-        { name: "TESOURA", img: "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?w=200&h=200&fit=crop" },
-        { name: "REGUA", img: "https://images.unsplash.com/photo-1586075010633-2470ac20283b?w=200&h=200&fit=crop" },
-        { name: "CADERNO", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=200&h=200&fit=crop" },
-        { name: "CANETA", img: "https://images.unsplash.com/photo-1585336139118-89c15310f669?w=200&h=200&fit=crop" },
-        { name: "MESA", img: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=200&h=200&fit=crop" },
-        { name: "RELOGIO", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=200&h=200&fit=crop" },
-        { name: "TELEFONE", img: "https://images.unsplash.com/photo-1520923179270-e0a537c3e574?w=200&h=200&fit=crop" },
-        { name: "PRATO", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=200&h=200&fit=crop" },
-        { name: "COPO", img: "https://images.unsplash.com/photo-1517254456976-ee8682099819?w=200&h=200&fit=crop" },
-        { name: "GARFO", img: "https://images.unsplash.com/photo-1550332910-acc253bc86bc?w=200&h=200&fit=crop" }
+        { name: "TESOURA", img: "../assets/images/objetos/tesoura.png" },
+        { name: "REGUA", img: "../assets/images/objetos/regua.png" },
+        { name: "CADERNO", img: "../assets/images/objetos/caderno.png" },
+        { name: "CANETA", img: "../assets/images/objetos/caneta.png" },
+        { name: "MESA", img: "../assets/images/objetos/mesa.png" },
+        { name: "RELOGIO", img: "../assets/images/objetos/relogio.png" },
+        { name: "TELEFONE", img: "../assets/images/objetos/telefone.png" },
+        { name: "PRATO", img: "../assets/images/objetos/prato.png" },
+        { name: "COPO", img: "../assets/images/objetos/copo.png" },
+        { name: "GARFO", img: "../assets/images/objetos/garfo.png" }
     ]
 };
 
