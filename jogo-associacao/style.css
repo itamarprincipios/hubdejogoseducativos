@@ -213,9 +213,9 @@ body {
 /* ── DROP SLOTS ── */
 .assoc-slot {
     background: rgba(255, 255, 255, 0.1);
-    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border: 3px dashed rgba(255, 255, 255, 0.3);
     border-radius: 20px;
-    min-height: 80px;
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -231,10 +231,11 @@ body {
 
 .slot-label {
     color: white;
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: 800;
+    font-size: 18px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-align: center;
 }
 
 .assoc-slot.matched {
