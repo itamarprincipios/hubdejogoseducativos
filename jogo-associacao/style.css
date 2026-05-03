@@ -204,11 +204,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
+    padding: 10px;
     cursor: grab;
     box-shadow: var(--shadow);
     transition: transform 0.2s, opacity 0.2s;
     user-select: none;
+    overflow: hidden;
+}
+
+.assoc-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.slot-img-container {
+    width: 60%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .assoc-item.dragging {
@@ -268,9 +290,6 @@ body {
     75% { transform: translateX(8px); }
 }
 
-.slot-image {
-    font-size: 32px;
-}
 
 .footer-links {
     margin-top: 20px;

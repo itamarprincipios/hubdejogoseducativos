@@ -1,25 +1,25 @@
 // ── Dados do Jogo ────────────────────────────────
 const DATA = {
     animais: [
-        { name: "CACHORRO", icon: "🐶" },
-        { name: "GATO", icon: "🐱" },
-        { name: "PEIXE", icon: "🐟" },
-        { name: "PÁSSARO", icon: "🐦" },
-        { name: "LEÃO", icon: "🦁" }
+        { name: "CACHORRO", img: "../assets/images/animais/cachorro.png" },
+        { name: "GATO", img: "../assets/images/animais/gato.png" },
+        { name: "PEIXE", img: "../assets/images/animais/peixe.png" },
+        { name: "PÁSSARO", img: "../assets/images/animais/passaro.png" },
+        { name: "LEÃO", img: "../assets/images/animais/leao.png" }
     ],
     frutas: [
-        { name: "MAÇÃ", icon: "🍎" },
-        { name: "BANANA", icon: "🍌" },
-        { name: "UVA", icon: "🍇" },
-        { name: "MORANGO", icon: "🍓" },
-        { name: "MELANCIA", icon: "🍉" }
+        { name: "MAÇÃ", img: "../assets/images/frutas/maca.png" },
+        { name: "BANANA", img: "../assets/images/frutas/banana.png" },
+        { name: "UVA", img: "../assets/images/frutas/uva.png" },
+        { name: "MORANGO", img: "../assets/images/frutas/morango.png" },
+        { name: "MELANCIA", img: "../assets/images/frutas/melancia.png" }
     ],
     objetos: [
-        { name: "MOCHILA", icon: "🎒" },
-        { name: "LÁPIS", icon: "✏️" },
-        { name: "LIVRO", icon: "📖" },
-        { name: "CADEIRA", icon: "🪑" },
-        { name: "BOLA", icon: "⚽" }
+        { name: "MOCHILA", img: "../assets/images/objetos/mochila.png" },
+        { name: "LÁPIS", img: "../assets/images/objetos/lapis.png" },
+        { name: "LIVRO", img: "../assets/images/objetos/livro.png" },
+        { name: "CADEIRA", img: "../assets/images/objetos/cadeira.png" },
+        { name: "BOLA", img: "../assets/images/objetos/bola.png" }
     ]
 };
 
@@ -85,7 +85,13 @@ function startGame() {
     shuffledItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'assoc-item';
-        div.textContent = item.icon;
+        
+        const img = document.createElement('img');
+        img.src = item.img;
+        img.alt = item.name;
+        img.draggable = false; // Impede o drag nativo da imagem para não bugar o nosso
+        div.appendChild(img);
+
         div.draggable = true;
         div.dataset.name = item.name;
         
@@ -207,7 +213,7 @@ function handleTouchEnd(e) {
 function processMatch(item, slot) {
     item.classList.add('matched');
     slot.classList.add('matched');
-    slot.innerHTML = `<span class="slot-image">${item.textContent}</span><span class="slot-label">${slot.dataset.match}</span>`;
+    slot.innerHTML = `<div class="slot-img-container">${item.innerHTML}</div><span class="slot-label">${slot.dataset.match}</span>`;
     
     // Som de acerto
     playSound('../jogo-leitura/assets/sounds/correct.mp3');
