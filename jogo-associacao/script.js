@@ -228,27 +228,34 @@ function handleTouchMove(e) {
 
 function handleTouchEnd(e) {
     this.classList.remove('dragging');
-    
-    const touch = e.changedTouches[0];
-    // IMPORTANTE: Primeiro detectamos o que está sob o dedo, 
-    // enquanto o pointerEvents ainda é 'none' (setado no move)
-    const target = document.elementFromPoint(touch.clientX, touch.clientY);
-    const slot = target?.closest('.assoc-slot');
-
-    // Agora restauramos o ponteiro
     this.style.pointerEvents = 'auto';
 
-    if (slot && !slot.classList.contains('matched')) {
-        if (this.dataset.name === slot.dataset.match) {
-            processMatch(this, slot);
+    const rect = this.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Encontra o slot por sobreposição de coordenadas (mais confiável em tablets)
+    let foundSlot = null;
+    document.querySelectorAll('.assoc-slot').forEach(slot => {
+        if (slot.classList.contains('matched')) return;
+        const sRect = slot.getBoundingClientRect();
+        if (centerX >= sRect.left && centerX <= sRect.right &&
+            centerY >= sRect.top && centerY <= sRect.bottom) {
+            foundSlot = slot;
+        }
+    });
+
+    if (foundSlot) {
+        if (this.dataset.name === foundSlot.dataset.match) {
+            processMatch(this, foundSlot);
         } else {
             playSound('../jogo-leitura/assets/sounds/wrong.mp3');
-            slot.classList.add('error');
-            setTimeout(() => slot.classList.remove('error'), 500);
+            foundSlot.classList.add('error');
+            setTimeout(() => foundSlot.classList.remove('error'), 500);
         }
     }
 
-    // Reset de estilos de posição
+    // Reset de estilos
     this.style.position = '';
     this.style.left = '';
     this.style.top = '';
