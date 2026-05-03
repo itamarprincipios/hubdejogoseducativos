@@ -16,17 +16,19 @@
 
 :root {
   --pink: #FF6B9D;
-  --blue: #5BAEFF;
+  --blue: #0047AB;
+  --blue-lt: #5BAEFF;
   --green: #00D68F;
   --purple: #9B59B6;
   --yellow: #F7D000;
   --orange: #FF9F1C;
-  --bg-dark: #11003C;
-  --bg-mid: #1A1A3E;
-  --text: #F0EEFF;
-  --text-dim: #B0A8D0;
-  --radius: 18px;
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --bg-dark: #003399;
+  --bg-gradient: linear-gradient(135deg, #003399 0%, #660033 100%);
+  --card-bg: #FFFFFF;
+  --text: #2D2D5E;
+  --text-dim: #6B7280;
+  --radius: 24px;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 html,
@@ -35,7 +37,7 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: 'Nunito', sans-serif;
-  background: var(--bg-dark);
+  background: var(--bg-gradient);
   color: var(--text);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -324,7 +326,7 @@ body {
 
 /* ─── START SCREEN ─── */
 #screen-start {
-  background: radial-gradient(ellipse at center, #2D1B69 0%, #11003C 70%);
+  background: var(--bg-gradient);
   gap: 0;
 }
 
@@ -334,26 +336,22 @@ body {
   align-items: center;
   gap: 20px;
   padding: 40px 36px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  backdrop-filter: blur(12px);
+  background: var(--card-bg);
+  border: none;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  max-width: 420px;
+  max-width: 440px;
   width: 90%;
-  zoom: 1.44;
+  zoom: 1.1; /* Reduzi o zoom para caber melhor em tablets */
 }
 
 .game-title {
   font-family: 'Fredoka One', cursive;
-  font-size: 42px;
+  font-size: 38px;
   text-align: center;
-  background: linear-gradient(135deg, var(--pink), var(--blue), var(--yellow));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--blue);
   line-height: 1.1;
-  filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5));
+  margin-bottom: 5px;
 }
 
 .game-subtitle {
@@ -449,14 +447,14 @@ body {
 /* ─── BUTTONS ─── */
 .btn-primary {
   font-family: 'Fredoka One', cursive;
-  font-size: 22px;
-  padding: 14px 44px;
+  font-size: 20px;
+  padding: 14px 60px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--pink), var(--purple));
+  background: var(--blue);
   color: white;
-  box-shadow: 0 6px 24px rgba(255, 107, 157, 0.5);
+  box-shadow: 0 6px 20px rgba(0, 71, 171, 0.3);
   transition: transform 0.15s, box-shadow 0.15s;
   letter-spacing: 0.5px;
 }
@@ -547,9 +545,9 @@ body {
   gap: 2px;
   width: 64px;
   height: 74px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
   color: var(--text);
@@ -561,9 +559,15 @@ body {
 }
 
 .grade-btn.selected {
-  border-color: var(--grade-color);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--grade-color) 80%, transparent);
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: 0 4px 12px rgba(0, 71, 171, 0.3);
+}
+
+.grade-btn.selected .grade-num,
+.grade-btn.selected .grade-label-text,
+.grade-btn.selected .grade-hint {
+  color: white !important;
 }
 
 .grade-num {
@@ -616,10 +620,9 @@ body {
   align-items: center;
   gap: 18px;
   padding: 36px 32px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  backdrop-filter: blur(12px);
+  background: var(--card-bg);
+  border: none;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   max-width: 340px;
   width: 90%;

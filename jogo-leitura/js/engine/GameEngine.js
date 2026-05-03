@@ -69,8 +69,6 @@ export class GameEngine {
         document.querySelectorAll(".grade-btn").forEach(btn => {
             const active = btn.dataset.grade === grade;
             btn.classList.toggle("selected", active);
-            btn.style.borderColor = active ? cfg.color : "transparent";
-            btn.style.boxShadow = active ? `0 0 12px ${cfg.color}88` : "none";
         });
         // Atualiza label debaixo dos botões
         const desc = document.getElementById("grade-desc");
@@ -418,10 +416,9 @@ export class GameEngine {
         const W = this.canvas.width;
         const H = this.canvas.height;
 
-        // Fundo com gradiente animado
+        // Fundo com gradiente
         const grad = ctx.createLinearGradient(0, 0, 0, H);
-        grad.addColorStop(0, "#1A1A3E");
-        grad.addColorStop(0.5, "#2D1B69");
+        grad.addColorStop(0, "#003399");
         grad.addColorStop(1, "#11003C");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, W, H);
