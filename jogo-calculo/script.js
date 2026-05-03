@@ -80,10 +80,13 @@ function randInt(min, max) {
 function fmtNum(n) {
   return n.toLocaleString('pt-BR');
 }
-function showScreen(name) {
+function showScreen(name, updateHistory = true) {
   Object.entries(screens).forEach(([k, el]) => {
     el.classList.toggle('active', k === name);
   });
+  if (updateHistory) {
+    history.pushState({ screen: name }, "");
+  }
 }
 function selectBtn(group, value) {
   group.querySelectorAll('.sel-btn').forEach(b => {
@@ -538,3 +541,22 @@ btnCfg.addEventListener('click', () => showScreen('config'));
 initConfig();
 setupKeypad('kp-a', 'A');
 setupKeypad('kp-b', 'B');
+
+// Estado inicial para navegação
+history.replaceState({ screen: 'config' }, "");
+
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.screen) {
+    showScreen(e.state.screen, false);
+    // Para o timer se voltar para config
+    if (e.state.screen === 'config') {
+        clearInterval(game.timerInterval);
+        game.active = false;
+    }
+  } else {
+    // Se não houver estado, volta para config por padrão
+    showScreen('config', false);
+    clearInterval(game.timerInterval);
+    game.active = false;
+  }
+});

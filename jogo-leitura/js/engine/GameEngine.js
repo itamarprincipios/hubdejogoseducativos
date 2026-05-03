@@ -82,10 +82,21 @@ export class GameEngine {
     async init() {
         this._resize();
         window.addEventListener("resize", () => this._resize());
-        // Web Speech API inicializa instantaneamente — sem loading overlay
+        
+        // Suporte ao botão 'Voltar' do navegador/celular
+        window.addEventListener("popstate", (e) => {
+            if (this.state === "PLAYING" || this.state === "GAMEOVER") {
+                this.returnToMenu(false); // false para não fazer pushState redundante
+            }
+        });
+
+        // Estado inicial para o botão voltar funcionar
+        history.replaceState({ screen: "START" }, "");
+
         await this.recognizer.init();
         this.ui.showStart();
         this.state = "START";
+        this._bindEvents();
     }
 
     _onRecognizerReady() {
@@ -110,8 +121,7 @@ export class GameEngine {
         // Botão de voltar ao menu
         document.getElementById("btn-menu")?.addEventListener("click", () => {
             if (this.state === "GAMEOVER") {
-                this.state = "START";
-                this.ui.showStart();
+                this.returnToMenu(true);
             }
         });
         // Botões de seleção de turma
@@ -185,17 +195,19 @@ export class GameEngine {
         this._micStarted = false;
         this._startMic();
 
+        // Adiciona entrada no histórico para o botão voltar funcionar
+        history.pushState({ screen: "PLAYING" }, "");
+
         if (this._rafId) cancelAnimationFrame(this._rafId);
         this._rafId = requestAnimationFrame((t) => this._loop(t));
     }
 
     _gameOver() {
         this.state = "GAMEOVER";
-        cancelAnimationFrame(this._rafId);
-        this.recognizer.stop();  // para o microfone
+        if (this._rafId) cancelAnimationFrame(this._rafId);
+        this.recognizer.stop();
         this.ui.setMicState("off");
         this._micStarted = false;
-
         this._playSound("gameover");
 
         const stats = this.score.finalize();
@@ -204,6 +216,26 @@ export class GameEngine {
         this.canvas.classList.add("shake");
         setTimeout(() => this.canvas.classList.remove("shake"), 600);
     }
+
+
+    /**
+     * Retorna ao menu inicial do jogo.
+     * @param {boolean} updateHistory - se deve atualizar o histórico (pushState)
+     */
+    returnToMenu(updateHistory = true) {
+        this.state = "START";
+        if (this._rafId) cancelAnimationFrame(this._rafId);
+        this.recognizer.stop();
+        this.ui.setMicState("off");
+        this._micStarted = false;
+        this.ui.showStart();
+
+        if (updateHistory) {
+            // Se estamos voltando via botão na UI, queremos que o histórico reflita isso
+            history.pushState({ screen: "START" }, "");
+        }
+    }
+
 
     // ─────────────────────────────────────────
     // RECONHECIMENTO DE VOZ
