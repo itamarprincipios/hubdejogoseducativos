@@ -105,7 +105,7 @@ function startGame() {
     shuffledItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'assoc-item';
-        div.innerHTML = `<img src="${item.img}" alt="${item.name}" draggable="false">`;
+        div.innerHTML = `<img src="${item.img}" alt="${item.name}" draggable="false" onerror="this.onerror=null; this.src='https://placehold.jp/24/5c67f2/ffffff/200x200.png?text=${item.name}';">`;
         div.draggable = true;
         div.dataset.name = item.name;
         
