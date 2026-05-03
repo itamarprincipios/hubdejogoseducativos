@@ -1,9 +1,9 @@
-existe // ============================================================
+// ============================================================
 // SERVICE WORKER — service-worker.js
 // Cacheia os assets do jogo (incluindo o modelo Vosk) para uso offline.
 // ============================================================
 
-const CACHE_NAME = "jogo-blocos-v2";
+const CACHE_NAME = "jogo-blocos-v3";
 const VOSK_CACHE = "vosk-model-v1";
 
 // Assets estáticos que sempre cacheamos no install
