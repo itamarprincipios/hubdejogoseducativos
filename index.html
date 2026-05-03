@@ -217,6 +217,15 @@
     });
   </script>
 
+  <!-- Global Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Global SW registrado'))
+        .catch(e => console.warn('Falha no SW:', e));
+    }
+  </script>
+
   <!-- Estilos inline: ripple -->
   <style>
     @keyframes rippleAnim {

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estoura Balão com Voz 🎈</title>
+    <link rel="stylesheet" href="style.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <section id="screen-start" class="screen active">
+            <div class="card main-card">
+                <div class="icon-header">🎈</div>
+                <h1 class="title">Estoura Balão<br>com Voz</h1>
+                <p class="subtitle">Fale a palavra do balão para estourá-lo!</p>
+                
+                <div class="mic-check">
+                    <span id="mic-label">🎤 Clique para testar o microfone</span>
+                </div>
+
+                <button id="btn-play" class="btn-primary">▶ Começar!</button>
+                
+                <div class="footer-links">
+                    <a href="../" class="link-hub">🏠 Voltar ao Hub</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-game" class="screen">
+            <div id="game-canvas-container">
+                <!-- Balões serão gerados aqui -->
+            </div>
+            
+            <div class="game-hud">
+                <div class="hud-item">🎈 <span id="val-score">0</span></div>
+                <div class="hud-item">❤️ <span id="val-lives">3</span></div>
+            </div>
+
+            <div id="speech-overlay">
+                <span id="recognized-text">...</span>
+            </div>
+        </section>
+
+        <section id="screen-result" class="screen">
+            <div class="card result-card">
+                <div class="result-icon">🎈</div>
+                <h2 class="result-title">Fim de Jogo!</h2>
+                <p class="result-msg">Você estourou <strong id="res-total">0</strong> balões!</p>
+                <button id="btn-restart" class="btn-primary">🔄 Jogar Novamente</button>
+                <button id="btn-home" class="btn-secondary">🏠 Menu Inicial</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts do motor de voz (reutilizados do jogo de leitura) -->
+    <script type="module" src="script.js?v=1"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

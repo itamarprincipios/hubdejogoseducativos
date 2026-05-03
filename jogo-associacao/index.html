@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mestre da Associação 🧩</title>
+    <link rel="stylesheet" href="style.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Tela Inicial -->
+        <section id="screen-start" class="screen active">
+            <div class="card main-card">
+                <div class="icon-header">🧩</div>
+                <h1 class="title">Mestre da<br>Associação</h1>
+                <p class="subtitle">Ligue a imagem ao seu nome correto!</p>
+                
+                <div class="category-grid">
+                    <button class="cat-btn" data-cat="animais">🐶 Animais</button>
+                    <button class="cat-btn" data-cat="frutas">🍎 Frutas</button>
+                    <button class="cat-btn" data-cat="objetos">🎒 Objetos</button>
+                </div>
+
+                <button id="btn-play" class="btn-primary" disabled>▶ Selecione um tema</button>
+                
+                <div class="footer-links">
+                    <a href="../" class="link-hub">🏠 Voltar ao Hub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tela de Jogo -->
+        <section id="screen-game" class="screen">
+            <div class="game-header">
+                <button id="btn-back-menu" class="btn-icon">⬅</button>
+                <div class="game-stats">
+                    <span id="stat-progress">0 / 0</span>
+                </div>
+            </div>
+
+            <div class="game-container">
+                <div id="items-column" class="column">
+                    <!-- Imagens para arrastar -->
+                </div>
+                <div id="slots-column" class="column">
+                    <!-- Slots com nomes -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tela de Resultado -->
+        <section id="screen-result" class="screen">
+            <div class="card result-card">
+                <div class="result-icon">🏆</div>
+                <h2 class="result-title">Parabéns!</h2>
+                <p class="result-msg">Você completou todos os pares!</p>
+                <button id="btn-restart" class="btn-primary">🔄 Jogar Novamente</button>
+                <button id="btn-home" class="btn-secondary">🏠 Menu Inicial</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js?v=1"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

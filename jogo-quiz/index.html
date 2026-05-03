@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Super Quiz de Leitura 💡</title>
+    <link rel="stylesheet" href="style.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Tela Inicial -->
+        <section id="screen-start" class="screen active">
+            <div class="card main-card">
+                <div class="icon-header">💡</div>
+                <h1 class="title">Super Quiz<br>de Leitura</h1>
+                <p class="subtitle">Leia a palavra e escolha a imagem certa!</p>
+                
+                <div class="difficulty-options">
+                    <button class="diff-btn selected" data-level="facil">⭐ Nível 1</button>
+                    <button class="diff-btn" data-level="medio">⭐⭐ Nível 2</button>
+                </div>
+
+                <button id="btn-play" class="btn-primary">▶ Jogar!</button>
+                
+                <div class="footer-links">
+                    <a href="../" class="link-hub">🏠 Voltar ao Hub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tela de Jogo -->
+        <section id="screen-game" class="screen">
+            <div class="game-top">
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <span id="question-counter">1 / 10</span>
+            </div>
+
+            <div class="quiz-container">
+                <div id="word-display" class="word-card">
+                    PALAVRA
+                </div>
+
+                <div id="options-grid" class="options-grid">
+                    <!-- 4 opções de imagem -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tela de Resultado -->
+        <section id="screen-result" class="screen">
+            <div class="card result-card">
+                <div id="result-emoji" class="result-icon">🥳</div>
+                <h2 id="result-title" class="result-title">Muito bem!</h2>
+                <p id="result-score" class="result-msg">Você acertou 8 de 10!</p>
+                
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span>Acertos ✅</span>
+                        <strong id="res-correct">0</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Erros ❌</span>
+                        <strong id="res-wrong">0</strong>
+                    </div>
+                </div>
+
+                <button id="btn-restart" class="btn-primary">🔄 Tentar Novamente</button>
+                <button id="btn-home" class="btn-secondary">🏠 Menu Inicial</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js?v=1"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>
