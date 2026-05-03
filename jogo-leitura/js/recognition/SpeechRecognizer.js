@@ -32,7 +32,7 @@ export class SpeechRecognizer {
         recognition.lang = "pt-BR";
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
+        recognition.maxAlternatives = 3; // Analisa as 3 melhores hipóteses
 
         // Cooldown para evitar duplos disparos da mesma palavra
         let lastFiredText = "";
@@ -41,19 +41,32 @@ export class SpeechRecognizer {
 
         recognition.onresult = (e) => {
             for (let i = e.resultIndex; i < e.results.length; i++) {
-                const text = e.results[i][0].transcript.trim();
-                const isFinal = e.results[i].isFinal;
-                if (!text) continue;
+                const result = e.results[i];
+                const isFinal = result.isFinal;
+                
+                // Coleta todas as alternativas de texto
+                const alternatives = [];
+                for (let j = 0; j < result.length; j++) {
+                    const t = result[j].transcript.trim();
+                    if (t) alternatives.push(t);
+                }
 
-                if (!isFinal) this._onPartial(text);
+                if (alternatives.length === 0) continue;
 
-                // Avalia tanto resultados parciais quanto finais para resposta imediata
+                // Texto principal para feedback parcial
+                const mainText = alternatives[0];
+                if (!isFinal) this._onPartial(mainText);
+
+                // Dispara o callback com todas as alternativas (separadas por espaço para o Evaluator)
+                const combinedText = alternatives.join(" ");
                 const now = Date.now();
-                const isDuplicate = text === lastFiredText && (now - lastFiredAt) < COOLDOWN_MS;
+                const isDuplicate = combinedText === lastFiredText && (now - lastFiredAt) < COOLDOWN_MS;
+                
                 if (!isDuplicate) {
-                    lastFiredText = text;
+                    lastFiredText = combinedText;
                     lastFiredAt = now;
-                    this._onResult(text, isFinal);
+                    // Passamos o combinedText; o Evaluator já quebra em tokens
+                    this._onResult(combinedText, isFinal);
                 }
             }
         };

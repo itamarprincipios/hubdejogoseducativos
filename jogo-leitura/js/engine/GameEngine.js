@@ -272,14 +272,15 @@ export class GameEngine {
 
         // Feedback de ERRO: apenas se o reconhecedor finalizou a frase (silêncio) e não houve match.
         // Isso evita barulhos aleatórios darem feedback de erro o tempo todo.
+        // Feedback de ERRO: apenas se o reconhecedor finalizou a frase (silêncio) e não houve match.
         if (isFinal && !matched && text.length > 2) {
             this._playSound("wrong");
             this.ui.showWrongGuess(text);
             airBlocks.forEach(b => b.triggerShake());
         }
         
-        // Limpa o texto parcial da UI se for o resultado final
-        if (isFinal) this.ui.setPartialText("");
+        // Limpa o texto parcial da UI se for o resultado final OU se houver match
+        if (isFinal || matched) this.ui.setPartialText("");
     }
 
     // ─────────────────────────────────────────
@@ -310,8 +311,8 @@ export class GameEngine {
         // Som de acerto
         this._playSound("correct");
 
-        // Define janela de ignorar voz (600ms é o tempo do arpejo de acerto)
-        this._ignoreSpeechUntil = Date.now() + 600;
+        // Define janela de ignorar voz (300ms é o suficiente para o beep de acerto)
+        this._ignoreSpeechUntil = Date.now() + 300;
     }
 
     /**
@@ -418,7 +419,7 @@ export class GameEngine {
                     this.ui.showMiss(block.word);
                     this.ui.updateScore(this.score.score, this.score.combo, this.score.highscore);
                     this._playSound("land");
-                    this._ignoreSpeechUntil = Date.now() + 300;
+                    this._ignoreSpeechUntil = Date.now() + 150;
                 }
             }
             return !shouldRemove;
