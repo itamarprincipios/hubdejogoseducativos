@@ -474,7 +474,8 @@ function endGame() {
     resEmoji.textContent= '🤝';
   }
 
-  showScreen('result');
+  showScreen('result', false);
+  history.replaceState({ screen: 'result' }, "");
   if (confColor) launchConfetti(confColor);
 }
 
