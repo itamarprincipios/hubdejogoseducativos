@@ -227,11 +227,15 @@ function handleTouchMove(e) {
 
 function handleTouchEnd(e) {
     this.classList.remove('dragging');
-    this.style.pointerEvents = 'auto';
-
+    
     const touch = e.changedTouches[0];
+    // IMPORTANTE: Primeiro detectamos o que está sob o dedo, 
+    // enquanto o pointerEvents ainda é 'none' (setado no move)
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
     const slot = target?.closest('.assoc-slot');
+
+    // Agora restauramos o ponteiro
+    this.style.pointerEvents = 'auto';
 
     if (slot && !slot.classList.contains('matched')) {
         if (this.dataset.name === slot.dataset.match) {
@@ -243,6 +247,7 @@ function handleTouchEnd(e) {
         }
     }
 
+    // Reset de estilos de posição
     this.style.position = '';
     this.style.left = '';
     this.style.top = '';
