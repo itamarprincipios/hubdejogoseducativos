@@ -121,32 +121,18 @@ body {
     width: 100%;
 }
 
-.category-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
+.level-info {
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    padding: 20px;
+    border-radius: 20px;
     margin-bottom: 30px;
 }
 
-.cat-btn {
-    background: #F8FAFC;
-    border: 2px solid #E2E8F0;
-    padding: 14px;
-    border-radius: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.cat-btn.selected {
-    background: #EEF2FF;
-    border-color: var(--primary);
+.level-info p {
+    font-weight: 700;
     color: var(--primary);
+    margin: 5px 0;
 }
 
 /* ── GAME BOARD ── */
